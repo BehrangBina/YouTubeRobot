@@ -1,0 +1,29 @@
+*** Settings ***
+Library           ExtendedSelenium2Library
+Library           ExcelLibrary
+Library           String
+Library           Collections
+Library           OperatingSystem
+
+*** Variables ***
+${url}            https://www.google.com.au
+${browser}        Chrome
+${searchbar}      name=q
+@{btnOk}          name=btnK
+${avocadoText}    xpath=//h3[text()='Avocado Consulting - Deliver With Certainty']
+${servicesUrl}    xpath=(//a[@href='https://www.avocado.com.au/services/'])[1]
+
+*** Test Cases ***
+SearchAvocadoConsulting
+    Open Browser    about:blank    ${browser}
+    Maximize Browser Window
+    Go To    ${url}
+    Input Text    ${searchbar}    avocado consulting
+    Click Element    @{btnOk}
+    Capture Page Screenshot    GoogleSearch.png
+    Click Element    ${avocadoText}
+    Capture Page Screenshot    Avocado.png
+    Log    Get Title
+    Title Should Be    Avocado Consulting - Deliver With Certainty
+    Click Element    ${servicesUrl}
+    Capture Page Screenshot    Service.png
